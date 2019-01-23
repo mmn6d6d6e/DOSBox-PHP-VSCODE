@@ -48,7 +48,6 @@ class CommandInvoker implements IExecuteCommand {
                     return;
                 }
             }
-            if($command!='exit')
             $outputter->printLine("'{$command}' is not recognized as an internal or external command, operable program or batch file.");
         } catch(Exception $e){
             if($e->getMessage() != null) {
