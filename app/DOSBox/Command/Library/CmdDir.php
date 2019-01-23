@@ -55,7 +55,19 @@ class CmdDir extends Command {
 
     public function printContent($directoryToPrint, IOutputter $outputter) {
         if($directoryToPrint->isDirectory()) {
-            $directoryContent = $this->directoryToPrint->getContent();
+            $directoryContent = $directoryToPrint->getContent();
+            
+            $outputter->printNoLine("\t\t\t");
+            $outputter->printNoLine($directoryToPrint->getTimestamp());
+            
+            $outputter->printNoLine("\t");
+            $outputter->printNoLine("<DIR>");
+            $outputter->printNoLine("\t");
+            $outputter->printNoLine("  ");
+
+            $outputter->printNoLine($directoryToPrint->getName());
+            $outputter->newLine();
+            $outputter->newLine();
         } else {
             $directoryContent = [$this->directoryToPrint];
         }
