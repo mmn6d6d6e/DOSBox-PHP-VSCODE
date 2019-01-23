@@ -23,19 +23,27 @@ class CommandInvoker implements IExecuteCommand {
     }
 
     public function executeCommand($command, IOutputter $outputter) {
+        if($command=='EXIT') {
+            $command='exit';
+        }
+        
         $cmdName = $this->parseCommandName($command);
         $params = $this->parseCommandParams($command);
+       
 
         try{
+            //NOE
             foreach($this->commands as $cmd){
                 if($cmd->compareCmdName($cmdName)){
+                    
+                
                     $cmd->setParams($params);
 
                     if($cmd->checkParameters($outputter) == false) {
                         $outputter->printLine("Wrong parameter entered.");
                         return;
                     }
-
+                    
                     $cmd->execute($outputter);
                     return;
                 }
