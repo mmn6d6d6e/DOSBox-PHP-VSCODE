@@ -23,6 +23,47 @@ class CommandInvoker implements IExecuteCommand {
     }
 
     public function executeCommand($command, IOutputter $outputter) {
+        
+
+       /* if($command=='EXIT') {
+            $command='exit';
+        }*/
+
+        $cmdhelp = explode(" ", $command);
+        if($cmdhelp[0]=='help')
+        {
+            $help['cd']="Displays the name of or changes the current directory";
+            $help['dir']="Displays a list of files and subdirectories in a directory.";
+            $help['exit']="Quits the CMD.EXE program (command interpreter).";
+            $help['format']="Formats a disk for use with Windows.";
+            $help['help']="Provides Help information for Windows commands";
+            $help['label']="Creates, changes, or deletes the volume label of a disk.";
+            $help['mkdir']="Creates a directory";
+            $help['mkfile']="Created a file.";
+            $help['move']="Moves one or more files from one directory to another directory";
+            
+            if(!$cmdhelp[1])
+            {
+                foreach($help as $hlp=>$val)
+                {
+                    $outputter->printLine("{$hlp} => {$val}");
+                }
+            }
+            else 
+            {
+                if($help[$cmdhelp[1]])
+                {
+                    $outputter->printLine($cmdhelp[1]." => ".$help[$cmdhelp[1]]);
+                }
+                else
+                {
+                    $outputter->printLine("Error : This command is not supported by the help utility.
+                    ");
+                }
+            }   
+        }
+    
+        
         $cmdName = $this->parseCommandName($command);
         $params = $this->parseCommandParams($command);
 
@@ -39,7 +80,9 @@ class CommandInvoker implements IExecuteCommand {
                     return $cmd->execute($outputter);
                 }
             }
+            if($command!='exit' && substr($command,0,4)!='help')
             $outputter->printLine("'{$command}' is not recognized as an internal or external command, operable program or batch file.");
+        
         } catch(Exception $e){
             if($e->getMessage() != null) {
                 $outputter->printLine("Unexpected exception while execution command: " . $e->getMessage());
