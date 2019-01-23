@@ -12,6 +12,7 @@ abstract class FileSystemItem {
     public function __construct($name, $parent){
         $this->name = $name;
         $this->parent = $parent;
+        $this->timestamp = new \DateTime();
     }
 
     public function getPath() {
@@ -65,5 +66,9 @@ abstract class FileSystemItem {
 
     public function __toString(){
         return $this->getPath();
+    }
+
+    public function getTimeStamp() {
+        return $this->timestamp->format('d/m/Y g:i A');
     }
 }
