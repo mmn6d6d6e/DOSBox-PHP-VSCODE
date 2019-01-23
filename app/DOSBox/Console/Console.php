@@ -22,23 +22,26 @@ class Console {
         $this->outputter->printLine("DOSBox, Scrum.org, Professional Scrum Developer Training.");
         $this->outputter->printLine("Copyright (c) Joshua Partogi. All rights reserved.");
 
-        $line = "";
-
-        while(strcmp(trim($line), "exit") != 0){
-            $this->outputter->newLine();
-            $this->outputter->printNoLine($this->drive->getPrompt());
-
-            try{
-                $char = trim(fread(STDIN, 256));
-                //$char = trim(fgets(STDIN));
-                $line = $char;
-            } catch (Exception $e){
-                // do nothing by intention
+        while ($line = $this->getInput()) {
+            $isExit = $this->invoker->executeCommand($line, $this->outputter);
+            if($isExit){
+                break;
             }
-
-            $this->invoker->executeCommand($line, $this->outputter);
         }
 
         $this->outputter->printLine("Goodbye!");
+    }
+
+    protected function getInput() {
+        $this->outputter->newLine();
+        $this->outputter->printNoLine($this->drive->getPrompt());
+
+        try{
+            $line = trim(fread(STDIN, 256));
+        } catch (Exception $e){
+            // do nothing by intention
+        }
+
+        return $line;
     }
 }
