@@ -10,6 +10,7 @@ class File extends FileSystemItem {
     public function __construct($name, $content){
         parent::__construct($name, NULL);
         $this->content = $content;
+        $this->timestamp = new \DateTime();
     }
 
     public function getFileContent() {
