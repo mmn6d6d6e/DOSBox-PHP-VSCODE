@@ -32,4 +32,8 @@ class File extends FileSystemItem {
     public function getNumberOfContainedDirectories() {
         return 0;  // A file does not contain any sub-directories
     }
+
+    public function getTimeStamp() {
+        return $this->timestamp->format('d/m/Y g:i A');
+    }
 }
