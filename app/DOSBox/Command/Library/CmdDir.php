@@ -37,10 +37,6 @@ class CmdDir extends Command {
             return null;
         }
 
-        if (!$fsi->isDirectory()) {
-            return $fsi->getParent();
-        }
-
         return $fsi;
     }
 
@@ -48,7 +44,7 @@ class CmdDir extends Command {
         $this->checkParameterValues($outputter);
 
         $this->printHeader($this->directoryToPrint, $outputter);
-        $this->printContent($this->directoryToPrint->getContent(), $outputter);
+        $this->printContent($this->directoryToPrint, $outputter);
         $this->printFooter($this->directoryToPrint, $outputter);
     }
 
@@ -57,7 +53,12 @@ class CmdDir extends Command {
         $outputter->newLine();
     }
 
-    public function printContent($directoryContent, IOutputter $outputter) {
+    public function printContent($directoryToPrint, IOutputter $outputter) {
+        if($directoryToPrint->isDirectory()) {
+            $directoryContent = $this->directoryToPrint->getContent();
+        } else {
+            $directoryContent = [$this->directoryToPrint];
+        }
         foreach ($directoryContent as $item) {
             $outputter->printNoLine("\t\t\t");
             $outputter->printNoLine($item->getTimestamp());
