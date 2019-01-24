@@ -25,6 +25,12 @@ class CmdType extends Command {
         $content = array_filter($currentDir->getContent(), function ($file) use ($fileName) {
             return $file->getName() == $fileName;
         });
+        if(!$fileName){
+            $outputter->printNoLine("The system cannot find the file specified"); 
+            $outputter->newLine();
+            return false;
+        }
+
         if(!isset($content[0])){
             $outputter->printNoLine("Directory not found"); 
             $outputter->newLine();
