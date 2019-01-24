@@ -34,7 +34,7 @@ class CmdType extends Command {
     }
 
     protected function printContent($targetFile, IOutputter $outputter){
-        $outputter->printNoLine($targetFile->getName());
+        $outputter->printNoLine($targetFile->getFileContent());
         $outputter->newLine();
     }
 }
