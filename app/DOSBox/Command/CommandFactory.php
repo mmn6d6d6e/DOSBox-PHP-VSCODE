@@ -9,6 +9,7 @@ use DOSBox\Command\Library\CmdMkDir as CmdMkDir;
 use DOSBox\Command\Library\CmdMkFile as CmdMkFile;
 use DOSBox\Command\Library\CmdExit as CmdExit;
 use DOSBox\Command\Library\CmdCopy as CmdCopy;
+use DOSBox\Command\Library\CmdType as CmdType;
 
 class CommandFactory {
     private $commands = array();
@@ -24,6 +25,7 @@ class CommandFactory {
         array_push($this->commands, new CmdExit("exit", $drive));
         array_push($this->commands, new CmdCopy("copy", $drive));
         array_push($this->commands, new CmdCopy("cp", $drive));
+        array_push($this->commands, new CmdType("type", $drive));
 
         // Add your commands here
     }
