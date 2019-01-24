@@ -39,7 +39,7 @@ class CmdMkFile extends Command {
                 return;
             }
         }
-        $fileContent = isset($this->params[1]) ? $this->params[1] : '';
+        $fileContent = count($this->params) >= 1 ? implode(' ', array_slice($this->params, 1)) : '';
         $newFile = new File($fileName, $fileContent);
         $this->getDrive()->getCurrentDirectory()->add($newFile);
     }
