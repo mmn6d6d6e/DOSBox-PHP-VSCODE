@@ -62,6 +62,24 @@ class CommandInvoker implements IExecuteCommand {
                 }
             }   
         }
+
+        if($cmdhelp[0]=='VER')
+        { 
+            $outputter->printLine("Microsoft Windows XP [Version 5.1.2600] as fixed text.");
+            
+            if(isset($cmdhelp[1])=='/w')
+            {
+                $help['Erwin Sutomo']="sutomo@stikom.edu";
+                $help['Eva Paramita']="mita@stikom.edu";
+                $help['Nunuk']="nunuk@stikom.edu.";
+                $help['Nuansa Jala Persada']="nuansa@stikom.edu";
+                $help['Nur Rahman Hadi']="rahman@stikom.edu";
+                foreach($help as $hlp=>$val)
+                {
+                    $outputter->printLine("{$hlp} => {$val}");
+                }
+            }
+        }
     
         
         $cmdName = $this->parseCommandName($command);
@@ -80,7 +98,7 @@ class CommandInvoker implements IExecuteCommand {
                     return $cmd->execute($outputter);
                 }
             }
-            if($command!='exit' && substr($command,0,4)!='help')
+            if($command!='exit' && substr($command,0,4)!='help'&& substr($command,0,3)!='VER')
             $outputter->printLine("'{$command}' is not recognized as an internal or external command, operable program or batch file.");
         
         } catch(Exception $e){
