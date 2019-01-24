@@ -21,9 +21,25 @@ class CmdType extends Command {
     public function checkParameterValues(IOutputter $outputter) {
         $fileName = $this->getParameterAt(0);
         $currentDir = $this->getDrive()->getCurrentDirectory();
-        $this->targetFile = array_filter($currentDir->getContent(), function ($file) use ($fileName) {
+        
+        $content = array_filter($currentDir->getContent(), function ($file) use ($fileName) {
             return $file->getName() == $fileName;
-        })[0];
+        });
+        if(!isset($content[0])){
+            $outputter->printNoLine("Directory not found"); 
+            $outputter->newLine();
+            return false;
+        }
+        else{
+        $this->targetFile = $content[0];
+        }
+
+        if($this->targetFile->isDirectory())
+        {
+            $outputter->printNoLine("Access Denied"); 
+            $outputter->newLine();
+            return false;   
+        }
         // TODO: untuk pak Nuansa, pengecekan sebelum eksekusi di sini
         return true;
 
